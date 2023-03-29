@@ -5,8 +5,12 @@ import requests
 import sys
 
 if __name__ == '__main__':
-
-    employee_id = int(sys.argv[1])
+    
+    try:
+        employee_id = int(sys.argv[1])
+    except Exception:
+        print("parameter is not a integer")
+        exit()
 
     user_url = "https://jsonplaceholder.typicode.com/users/{}".format(
         employee_id)
