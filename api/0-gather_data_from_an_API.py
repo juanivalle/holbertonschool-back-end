@@ -6,30 +6,20 @@ import sys
 
 if __name__ == '__main__':
 
-    try:
-        employee_id = int(sys.argv[1])
-    except Exception:
-        print("parameter is not a integer")
-        exit()
+    USER_ID = sys.argv[1]
+    users_url = "https://jsonplaceholder.typicode.com/users"
+    todos_url = "https://jsonplaceholder.typicode.com/todos"
 
-    user_url = "https://jsonplaceholder.typicode.com/users/{}".format(
-        employee_id)
-    url = "https://jsonplaceholder.typicode.com/todos/?userId={}".format(
-        employee_id)
+    done_tasks = requests.get(todos_url, params= {
+        'completed': 'True', 'user_Id': USER_ID}).json
+    not_done_tasks = requests.get(todos_url, params= {
+        'completed': 'False', 'user_Id': USER_ID}).json
+    info = requests.get(users_url, params= {'id': USER_ID}).json()
 
-    done_task = 0
-    total_tasks = 0
-
-    response = requests.get(url).json()
-    usr_response = requests.get(user_url).json().get('name')
-
-    for task in response:
-        total_tasks = total_tasks + 1
-        if task['completed'] is True:
-            done_task = done_task + 1
-    print("Employee {} is done with({}/{}):".format(
-        usr_response, done_task, total_tasks))
-
-    for task in response:
-        if task['completed'] is True:
-            print("\t {}".format(task['title']))
+    EMPLOYEE_NAME = info[0]['name']
+    num_done_tasks = len(done_tasks)
+    num_total_tasks = len(done_tasks + num_done_tasks)
+    print('Employee {} is done with tasks({}/{}):'.format(
+        EMPLOYEE_NAME, num_done_tasks, num_total_tasks))
+    for task in done_tasks:
+        print("\t {}".format(task['title']))
