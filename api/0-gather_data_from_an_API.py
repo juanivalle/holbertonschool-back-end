@@ -23,7 +23,7 @@ if __name__ == '__main__':
         total_tasks += 1
         if task['completed'] is True:
             done_task += 1
-    print("Employee {} is done with {}/{}:".format(
+    print("Employee {} is done with({}/{}):".format(
         usr_response, done_task, total_tasks))
 
     for task in response:
