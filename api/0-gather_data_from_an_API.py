@@ -8,7 +8,7 @@ if __name__ == '__main__':
     
     employee_id = int(sys.argv[1])
     
-    url = "https://jsonplaceholder.typicode.com/todos"
+    url = "https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
     user_url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
     
     done_task = 0
@@ -22,8 +22,8 @@ if __name__ == '__main__':
         if task['completed'] is True:
             done_task += 1
 
-    print(f"Employee {usr_response} is done with {done_task}/{total_tasks}:")
+    print("Employee {} is done with {}/{}:".format(usr_response, done_task, total_tasks))
 
     for task in response:
         if task['completed'] is True:
-            print(f"{task['title']}#{task['id']}")
+            print("\t {}".format(task['title'])) 
