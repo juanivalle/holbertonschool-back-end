@@ -5,7 +5,7 @@ import requests
 import sys
 
 if __name__ == '__main__':
-    
+
     try:
         employee_id = int(sys.argv[1])
     except Exception:
