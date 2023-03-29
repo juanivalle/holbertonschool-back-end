@@ -22,7 +22,6 @@ if __name__ == '__main__':
     user_response = requests.get(user_url).json().get('name')
     response = requests.get(url).json()
 
-    
     for task in response:
         total_tasks += 1
         if task['completed'] is True:
