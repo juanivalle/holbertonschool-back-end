@@ -24,9 +24,9 @@ if __name__ == '__main__':
     usr_response = requests.get(user_url).json().get('name')
 
     for task in response:
-        total_tasks += 1
+        total_tasks = total_tasks + 1
         if task['completed'] is True:
-            done_task += 1
+            done_task = done_task + 1
     print("Employee {} is done with({}/{}):".format(
         usr_response, done_task, total_tasks))
 
