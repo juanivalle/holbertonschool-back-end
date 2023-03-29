@@ -24,7 +24,7 @@ if __name__ == '__main__':
         if task['completed'] is True:
             done_task += 1
     print("Employee {} is done with {}/{}:".format(
-        usr_response,done_task, total_tasks))
+        usr_response, done_task, total_tasks))
 
     for task in response:
         if task['completed'] is True:
