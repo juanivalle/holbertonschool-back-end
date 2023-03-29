@@ -5,22 +5,32 @@ import requests
 import sys
 
 if __name__ == '__main__':
+    try:
+        employee_id = int(sys.argv[1])
+    except Exception:
+        print("Please insert an integer as a parameter")
+        exit()
 
-    USER_ID = sys.argv[1]
-    users_url = "https://jsonplaceholder.typicode.com/users"
-    todos_url = "https://jsonplaceholder.typicode.com/todos"
+    done_tasks = 0
+    total_tasks = 0
 
-    done_tasks = requests.get(todos_url, params={
-        'completed': 'True', 'user_Id': USER_ID}).json
-    total_task = requests.get(todos_url, params={'userId': USER_ID}).json()
-    info = requests.get(users_url, params={'id': USER_ID}).json()
+    user_url = 'https://jsonplaceholder.typicode.com/users/{}'.format(
+        employee_id)
+    url = 'https://jsonplaceholder.typicode.com/todos/?userId={}'.format(
+        employee_id)
 
-    EMPLOYEE_NAME = info[0]['name']
-    num_done_tasks = len(done_tasks)
-    num_total_tasks = len(total_task)
+    user_response = requests.get(user_url).json().get('name')
+    response = requests.get(url).json()
 
-    print('Employee {} is done with tasks({}/{}):'.format(
-        EMPLOYEE_NAME, num_done_tasks, num_total_tasks))
+    
+    for task in response:
+        total_tasks += 1
+        if task['completed'] is True:
+            done_tasks += 1
 
-    for task in done_tasks:
-        print("\t {}".format(task['title']))
+    print("Employee {} is done with tasks({}/{}):".format(user_response,
+          done_tasks, total_tasks))
+
+    for task in response:
+        if task['completed'] is True:
+            print("\t {}".format(task['title']))
